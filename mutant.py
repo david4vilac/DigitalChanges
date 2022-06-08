@@ -1,77 +1,73 @@
+#########MATRIX PARAMETERS
+
 ### This function check if adn is correct
 def is_adn(dna):
     bn = ['A', 'T', 'C', 'G']
-    for elemento in dna:
-        for i in range(0, len(elemento)):
-            if elemento[i] != bn:
-                return False
-            else:
-                return True
+    for i in range(len(dna)):
+        for j in range(len(dna)):
+            if dna[i][j] not in bn:
+                return {f"Error {dna[i][j]} isn't a valid value!!"}
+    return True
 
 ### This function validates array size
 def array_size(dna):
-    for elemento in dna:
-        if len(elemento) == len(dna):
-            return True
-        else:
-            return False
+    for i in range(len(dna)):
+        if len(dna[i]) != len(dna):
+            return {"Error array size!!"}
+    return is_adn(dna)
 
-def validacion_horizontal(dna):
-    contador = 1
+def horizontal_validation(dna):
+    counter = 1
     for i in range(len(dna)):
         for j in range(len(dna)-1):
             if dna[i][j] == dna[i][j+1]:
-                contador += 1
-                if contador == 4:
-                    print(f'En la fila: {dna[i]} tiene dna mutante')
+                counter += 1
+                if counter == 4:
                     return True
             else:
-                contador = 1
+                counter = 1
     return False
 
-
-
-def validacion_vertical(dna):
-    contador = 1
+def vertical_validation(dna):
+    counter = 1
     for i in range(len(dna)):
         for j in range(len(dna)-1):
             if dna[j][i] == dna[j+1][i]:
-                contador += 1
+                counter += 1
             else:
-                contador = 1
-            if contador == 4:
-                print(f'En la columna: {i+1} tiene dna mutante')
+                counter = 1
+            if counter == 4:
                 return True
-
     return False
 
 
-
-def validacion_oblicua(dna):
-    contador = 1;
+def oblique_validation(dna):
+    counter = 1;
     valor = None
     for i in range(len(dna)):
         for j in range(len(dna)):
             if i == j:
                 valor = f"{dna[i-1][j-1]}"
                 if dna[i][j] == valor:
-                    contador += 1
+                    counter += 1
                 else:
-                    contador = 1
-                if contador == 4:
-
-                    print("mutante")
-
+                    counter = 1
+                if counter == 4:
+                    return True
 
 
+def is_mutant(dna):
+    if array_size(dna) == True:
+        va_1 = horizontal_validation(dna)
+        va_2 = vertical_validation(dna)
+        va_3 = oblique_validation(dna)
+        if va_1 or va_2 or va_3:
+            return {"Is a Mutant"}
 
-dna =  ["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
 
 
+dna =["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
 
+print(is_mutant(dna))
 
-validacion_vertical(dna)
-validacion_oblicua(dna)
-#print(is_adn(dna))
-#print(array_size(dna))
 
