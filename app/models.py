@@ -11,6 +11,5 @@ class Human(Base):
 
 class Mutant(Base):
     __tablename__ = "mutant"
-
     id = Column(String, primary_key=True, index=True)
-    dna = Column(String, index=True)
+    dna = Column(ARRAY(String), index=True)

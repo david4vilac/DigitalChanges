@@ -62,10 +62,17 @@ def is_mutant(dna):
         va_1 = horizontal_validation(dna)
         va_2 = vertical_validation(dna)
         va_3 = oblique_validation(dna)
-        if va_1 or va_2 or va_3:
+        if (va_1 or va_2 or va_3) == True:
             return True
+        elif (va_1 and va_2 and va_3) == False:
+            return False
+        else:
+            return None
 
 dna =["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
+humano = ["ATGCGA","CCGTGC","TTATAT","ATAAGG","CCTCTA","TCACTC"]
+con_falla = ["ATGCGA","CGTGC","TPATAT","ATAAGG","CCTCTA","TCACTC"]
+
 
 
 

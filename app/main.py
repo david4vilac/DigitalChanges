@@ -14,17 +14,14 @@ from . import database as db
 from .database import SessionLocal, engine, get_db
 from sqlalchemy.orm import Session
 
-models.Base.metadata.create_all(bind=engine)
-
 from app.mutant import is_mutant
 
+models.Base.metadata.create_all(bind=engine)
+
+
+
 import uuid
-"""
-class Mutant(BaseModel):
-    dna: List[str] = 
 
-
-"""
 
 app = FastAPI()
 @app.get("/")
@@ -43,31 +40,48 @@ def validation_mutant(mutant:schemas.Mutant = Body(...)):
 
     """
     if is_mutant(mutant.dna) != True:
-        raise HTTPException(status_code=403, detail="Item not found")
+        raise HTTPException(status_code=403, detail="Not a Mutant !")
     return mutant
 
 
+
+
+
 @app.post("/mutantDB/",
-          tags=["Mutant"],
+          tags=["DataBase"],
           response_model=schemas.Mutant,
           status_code=status.HTTP_200_OK,
-          summary="Registrar mutante en la DB")
-def create_mutant(entrada:schemas.Person, db:Session=Depends(db.get_db)):
+          summary="Registrar mutante en la BD")
+def create_mutant(entrada:schemas.Person=Body(...), db:Session=Depends(db.get_db)):
     id = uuid.uuid4()
     dna_comprobator = entrada.dna
-    if is_mutant(dna_comprobator) == True:
+    if is_mutant(dna_comprobator) == None:
+        raise HTTPException(status_code=403, detail="403 Forbidden !")
+    elif is_mutant(dna_comprobator) == True:
         mutant = models.Mutant(id=str(id), dna=entrada.dna)
         db.add(mutant)
         db.commit()
         db.refresh(mutant)
         print("Registro Mutante")
         return mutant
-    else:
+    elif is_mutant(dna_comprobator) == False:
         human = models.Human(id = str(id), dna=entrada.dna)
         db.add(human)
         db.commit()
         db.refresh(human)
         print("Registro Humano")
         return human
+
+@app.get('/list_mutants')
+def get_user(db: Session=Depends(db.get_db)):
+    return db.query(models.Human).all()
+
+
+@app.get('/stats')
+def get_user(db: Session=Depends(db.get_db)):
+    count_muntant_dna = db.query(models.Mutant).count()
+    count_human_dna = db.query(models.Human).count()
+    ratio = count_muntant_dna/(count_muntant_dna + count_human_dna)
+    return {"count_mutant_dna":count_muntant_dna, "count_human_dna":count_human_dna, "ratio":ratio}
 
 
