@@ -1,3 +1,4 @@
+
 #########MATRIX PARAMETERS
 
 ### This function check if adn is correct
@@ -62,12 +63,9 @@ def is_mutant(dna):
         va_2 = vertical_validation(dna)
         va_3 = oblique_validation(dna)
         if va_1 or va_2 or va_3:
-            return {"Is a Mutant"}
-
-
+            return True
 
 dna =["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
 
-print(is_mutant(dna))
 
 
