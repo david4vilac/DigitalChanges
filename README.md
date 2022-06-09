@@ -95,8 +95,8 @@ ADN - con fallas
 
 Deploy
 -------------
-
-Realice un deploy en Heroku, donde se puede evidenciar mejor la API. La base de datos tiene una instancia en la nube, por ende respondera correctamente.
+**RAMA DETA**
+Realice un deploy en Heroku, esto se evidencia en la rama DETA, donde se puede evidenciar mejor la API. La base de datos tiene una instancia en la nube, por ende respondera correctamente.
 Este es el link:
 
 https://pruebadaviddc.herokuapp.com/
