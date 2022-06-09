@@ -91,8 +91,6 @@ ADN - con fallas
 ```
 ["ATGCGA","CGTGC","TPATAT","ATAAGG","CCTCTA","TCACTC"]
 ```  
-Salidas
--------------
 
 
 Deploy
@@ -100,6 +98,7 @@ Deploy
 
 Realice un deploy en Heroku, donde se puede evidenciar mejor la aplicación.
 Este es el link:
+
 https://pruebadaviddc.herokuapp.com/
 
 
