@@ -22,25 +22,27 @@ NIVEL 2 - API REST
 -------------
 Se utilizó el framework de FastAPI, para cumplir los objetivos de la prueba. Para hacer uso de las librerías utilizadas, sugiero crear un entorno virtual e instalar las librerías, de la siguiente manera:
 
-Consola git bash o SO Linux
+ + Consola git bash o SO Linux
+ 
 `$ python3 -m venv venv`
 
 `$ source venv/bin/activate`
 
-cmd windows (se necesita tener el paquete de software virtualenv).
+ + cmd windows (se necesita tener el paquete de software virtualenv).
 
-Instalar librerías
+ + Instalar librerías
+ 
 `C:\> pip install virtualenv` - [Opcional]
 
 `C:\> virtualenv venv` - Crea el virtual environment.
 
 `C:\> venv\Scripts\activate.bat` - Inicializa el virtual environment.
 
-Por ultimo se instalan los paquetes utilizados en el proyecto.
+ + Por ultimo se instalan los paquetes utilizados en el proyecto.
 
 `(env) $ pip install -r requirements.txt`
 
-Ya con esto se puede inicializar nuestro servicio. Con el comando:
+ + Ya con esto se puede inicializar nuestro servicio. Con el comando:
 
 `$ uvicorn app.main:main`
 
@@ -57,14 +59,17 @@ Nivel 3
 -------------
 
 Utilice PostgreSQL para solucionar este ítem, la base de datos está adjuntada en el git, la cual cuenta con algunos registros. La conexión se encuentra en el archivo **database.py**, el nombre de la base de datos es **xmen**.
+
 ```
 SQLALCHEMY_DATABASE_URL = "postgresql://postgres:<password>@localhost:<puerto>/xmen"
 ```
-En este archivo se puede cambiar la direccion para consumo de la base de datos.
+Utilice PostgreSQL para solucionar este ítem, la base de datos está adjuntada en el git, la cual cuenta con algunos registros.
+En este archivo se puede cambiar la dirección para consumo de la base de datos.
 
 Para guardar datos en la base de datos se utiliza un HTTP POST -> /mutantDB/
 
-Las estadisticas se pueden visualizar des de un HTTP GET -> /stats.
+Las estadísticas se pueden visualizar desde un HTTP GET -> /stats.
+
 
 
 
