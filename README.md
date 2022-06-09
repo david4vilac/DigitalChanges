@@ -77,13 +77,14 @@ Pruebas
 -------------
 
 Para la realización de pruebas se puede hacer uso de los siguientes datos:
+
 ADN - Mutante
 ```
-dna =["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
+["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
 ``` 
 ADN - Humano
 ```
-humano = ["ATGCGA","CCGTGC","TTATAT","ATAAGG","CCTCTA","TCACTC"]
+["ATGCGA","CCGTGC","TTATAT","ATAAGG","CCTCTA","TCACTC"]
 ```
 ADN - con fallas
 ```
