@@ -12,7 +12,7 @@ body {
   color: #f988ff;
   overflow-x: hidden;
   font-family: 'Press Start 2P', cursive;
-  background-image: url_for('static', path='/styles.css');
+  background-image: url('https://github.com/AlvariroA/DigitalChanges/blob/main/static/fondo.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
