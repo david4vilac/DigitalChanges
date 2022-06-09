@@ -46,7 +46,10 @@ Se utilizó el framework de FastAPI, para cumplir los objetivos de la prueba. Pa
 
 `$ uvicorn app.main:main`
 
-Al ingresar a localhost:8000/, se visualizará lo siguiente: Ahora al ingresar a localhost:8000/docs, se podrán ver las API con los métodos solicitados en el documento, estas se documentaron desde el archivo main.py
+Al ingresar a localhost:8000/ se visualizará lo siguiente: 
+![](https://github.com/AlvariroA/DigitalChanges/blob/main/img/Home.png)
+
+Ahora al ingresar a localhost:8000/docs, se podrán ver las API con los métodos solicitados en el documento, estas se documentaron desde el archivo main.py
 
 localhost:8000/docs
 -------------
@@ -70,7 +73,19 @@ Para guardar datos en la base de datos se utiliza un HTTP POST -> /mutantDB/
 
 Las estadísticas se pueden visualizar desde un HTTP GET -> /stats.
 
+Pruebas
+-------------
 
+Para la realización de pruebas se puede hacer uso de los siguientes datos:
+```
+dna =["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
+``` ADN - Mutante
+```
+humano = ["ATGCGA","CCGTGC","TTATAT","ATAAGG","CCTCTA","TCACTC"]
+``` ADN - Humano
+```
+["ATGCGA","CGTGC","TPATAT","ATAAGG","CCTCTA","TCACTC"]
+```  ADN - con fallas.
 
 
 
