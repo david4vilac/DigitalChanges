@@ -13,23 +13,24 @@ def is_adn(dna):
 ### This function validates array size
 def array_size(dna):
     for i in range(len(dna)):
-        if len(dna[i]) != len(dna):
-            return {"Error array size!!"}
-    return is_adn(dna)
+        if len(dna[i]) == len(dna):
+            return is_adn(dna)
 
-def horizontal_validation(dna):
+
+def horizontal_validation(dna, sequence):
     counter = 1
     for i in range(len(dna)):
         for j in range(len(dna)-1):
             if dna[i][j] == dna[i][j+1]:
                 counter += 1
                 if counter == 4:
-                    return True
+                    sequence += 1
+                    counter = 1
             else:
                 counter = 1
-    return False
+    return sequence
 
-def vertical_validation(dna):
+def vertical_validation(dna, sequence):
     counter = 1
     for i in range(len(dna)):
         for j in range(len(dna)-1):
@@ -38,13 +39,13 @@ def vertical_validation(dna):
             else:
                 counter = 1
             if counter == 4:
-                return True
-    return False
+                sequence += 1
+                counter = 1
+    return sequence
 
 
-def oblique_validation(dna):
+def oblique_validation(dna, sequence):
     counter = 1;
-    valor = None
     for i in range(len(dna)):
         for j in range(len(dna)):
             if i == j:
@@ -54,25 +55,25 @@ def oblique_validation(dna):
                 else:
                     counter = 1
                 if counter == 4:
-                    return True
+                    sequence += 1
+    return sequence
 
 
 def is_mutant(dna):
     if array_size(dna) == True:
-        va_1 = horizontal_validation(dna)
-        va_2 = vertical_validation(dna)
-        va_3 = oblique_validation(dna)
-        if (va_1 or va_2 or va_3) == True:
+        sequence = 0
+        va_1 = horizontal_validation(dna, sequence)
+        va_2 = vertical_validation(dna, sequence)
+        va_3 = oblique_validation(dna, sequence)
+        if (va_1 + va_2 + va_3) >= 2:
             return True
-        elif (va_1 and va_2 and va_3) == False:
+        elif (va_1 + va_2 + va_3) < 2:
             return False
-        else:
-            return None
 
 dna =["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
 humano = ["ATGCGA","CCGTGC","TTATAT","ATAAGG","CCTCTA","TCACTC"]
 con_falla = ["ATGCGA","CGTGC","TPATAT","ATAAGG","CCTCTA","TCACTC"]
 
-
+is_mutant(dna)
 
 

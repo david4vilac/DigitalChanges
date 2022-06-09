@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field
 from typing import List, Optional
 
 class Person(BaseModel):
+    id: Optional[str]
     dna: List[str] = Field(...,
                      example = ["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]
                             )

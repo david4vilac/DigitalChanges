@@ -1,87 +1,92 @@
+#Python
 from typing import List
+import uuid
 
-
-
+#FastAPI
 from fastapi import status
 from fastapi import FastAPI
 from fastapi import Body
 from fastapi import HTTPException
 from fastapi import Depends
 
-
+#Local
 from . import models, schemas, create_person
 from . import database as db
-from .database import SessionLocal, engine, get_db
+from .mutant import is_mutant
+
+#Database
+from .database import engine
 from sqlalchemy.orm import Session
-
-from app.mutant import is_mutant
-
-models.Base.metadata.create_all(bind=engine)
-
-
-
-import uuid
 
 
 app = FastAPI()
-@app.get("/")
-def read_root():
+
+
+@app.get("/",
+         status_code=status.HTTP_200_OK,
+         tags=["Home"],
+         response_model=schemas.Mutant,
+         summary="Presentación Magneto.")
+def home():
+    """
+    Aquí se Presenta la Bienvenida de **Magneto.**
+    """
     return {"Hello": "World"}
 
 
 @app.post("/mutant/",
           status_code=status.HTTP_200_OK,
-          tags=["Mutant"],
+          tags=["Nivel 2"],
           response_model=schemas.Mutant,
           summary="Ingresa el ADN.")
 def validation_mutant(mutant:schemas.Mutant = Body(...)):
     """
     *Verificar si es mutante o no.*
-
     """
     if is_mutant(mutant.dna) != True:
         raise HTTPException(status_code=403, detail="Not a Mutant !")
     return mutant
 
-
-
-
-
 @app.post("/mutantDB/",
-          tags=["DataBase"],
-          response_model=schemas.Mutant,
+          tags=["Nivel 3"],
+          response_model=schemas.Person,
           status_code=status.HTTP_200_OK,
           summary="Registrar mutante en la BD")
-def create_mutant(entrada:schemas.Person=Body(...), db:Session=Depends(db.get_db)):
-    id = uuid.uuid4()
-    dna_comprobator = entrada.dna
+def create_mutant(person:schemas.Person=Body(...),
+                  db:Session=Depends(db.get_db)):
+    dna_comprobator = person.dna
     if is_mutant(dna_comprobator) == None:
         raise HTTPException(status_code=403, detail="403 Forbidden !")
-    elif is_mutant(dna_comprobator) == True:
-        mutant = models.Mutant(id=str(id), dna=entrada.dna)
-        db.add(mutant)
-        db.commit()
-        db.refresh(mutant)
-        print("Registro Mutante")
-        return mutant
-    elif is_mutant(dna_comprobator) == False:
-        human = models.Human(id = str(id), dna=entrada.dna)
-        db.add(human)
-        db.commit()
-        db.refresh(human)
-        print("Registro Humano")
-        return human
+    if create_person.validation(db=db, dna=dna_comprobator) == True:
+        raise HTTPException(status_code=403, detail="Person in db")
+    create_person.create_person_function(db=db, person=schemas.Person(dna=person.dna))
 
-@app.get('/list_mutants')
+@app.get('/stats',
+         tags=["Nivel 3"],
+         status_code=status.HTTP_200_OK,
+         summary="Consulta estadisticas de la BD."
+         )
 def get_user(db: Session=Depends(db.get_db)):
-    return db.query(models.Human).all()
-
-
-@app.get('/stats')
-def get_user(db: Session=Depends(db.get_db)):
+    """
+    **Returns:** Devuelve un Json con las estadísticas de las verificaciones de ADN.
+    """
     count_muntant_dna = db.query(models.Mutant).count()
     count_human_dna = db.query(models.Human).count()
-    ratio = count_muntant_dna/(count_muntant_dna + count_human_dna)
-    return {"count_mutant_dna":count_muntant_dna, "count_human_dna":count_human_dna, "ratio":ratio}
+    total = count_human_dna + count_muntant_dna
+    if total != 0:
+        ratio = count_muntant_dna/(count_muntant_dna + count_human_dna)
+        return {"count_mutant_dna":count_muntant_dna, "count_human_dna":count_human_dna, "ratio":ratio}
+
+@app.get('/list_mutants',
+         tags=["Nivel 3"],
+         status_code=status.HTTP_200_OK,
+         summary="Lista mutantes registrados."
+         )
+def get_user(db: Session=Depends(db.get_db)):
+    """
+    Returns: Mutantes registrados en la BD.
+    """
+    return db.query(models.Mutant).all()
 
 
+models.Base.metadata.create_all(bind=engine)
