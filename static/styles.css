@@ -12,6 +12,7 @@ body {
   color: #f988ff;
   overflow-x: hidden;
   font-family: 'Press Start 2P', cursive;
+  background-image: url(fondo.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
