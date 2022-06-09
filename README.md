@@ -75,6 +75,7 @@ Las estadísticas se pueden visualizar desde un HTTP GET -> /stats.
 
 Pruebas
 -------------
+![](https://github.com/AlvariroA/DigitalChanges/blob/DETA/img/RespuestasDB.png)
 
 Para la realización de pruebas se puede hacer uso de los siguientes datos:
 
@@ -90,7 +91,16 @@ ADN - con fallas
 ```
 ["ATGCGA","CGTGC","TPATAT","ATAAGG","CCTCTA","TCACTC"]
 ```  
+Salidas
+-------------
 
+
+Deploy
+-------------
+
+Realice un deploy en Heroku, donde se puede evidenciar mejor la aplicación.
+Este es el link:
+https://pruebadaviddc.herokuapp.com/
 
 
 
